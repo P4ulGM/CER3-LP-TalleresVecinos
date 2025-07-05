@@ -25,7 +25,21 @@
                 <li class="nav-item">
                   <a class="nav-link active" href="#">Inicio</a>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="#">Talleres Propuestos</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link active" href="#">Talleres Futuros</a>
+                </li>
                 {% if request.user.is_authenticated %}
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#">Proponer Talleres</a>
+                    </li>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" href="#">Ver Talleres</a>
+                    </li>
                     <li class="nav-item">
                         <form method="post" action="{% url 'logout' %}" style="display:inline;">
                             {% csrf_token %}
