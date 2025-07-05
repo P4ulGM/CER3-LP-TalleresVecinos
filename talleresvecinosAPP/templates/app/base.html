@@ -25,12 +25,21 @@
                 <li class="nav-item">
                   <a class="nav-link active" href="#">Inicio</a>
                 </li>
-                <li class="nav-item">
-                  <a class="nav-link active" href="#">Materiales</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link active" href="#">Puntos</a>
-                </li>
+                {% if request.user.is_authenticated %}
+                    <li class="nav-item">
+                        <form method="post" action="{% url 'logout' %}" style="display:inline;">
+                            {% csrf_token %}
+                            <button type="submit" class="nav-link btn btn-link btn-logout">Salir</button>
+                        </form>
+                    </li>
+                {% else %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'login' %}">Ingresar</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'register' %}">Registrarse</a>
+                    </li>
+                {% endif %}
               </ul>
             </div>
           </div>

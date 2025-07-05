@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'crispy_forms',  # Crispy Forms for better form rendering
+    'crispy_bootstrap5',  # Bootstrap 5 template for Crispy Forms
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
