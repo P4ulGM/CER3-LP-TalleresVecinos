@@ -37,7 +37,7 @@ def ver_talleres(request):
         # Construir la URL de la API con filtros
         api_url = f"{request.build_absolute_uri('/api/talleres/')}"
         params = {
-            'estado': 'aceptado'  # Filtrar solo talleres aceptados
+            'estado__in': 'aceptado,pendiente'  # Filtrar múltiples estados
         }
         
         if categoria_id:
@@ -66,3 +66,13 @@ def ver_talleres(request):
         'categoria_seleccionada': categoria_id
     }
     return render(request, 'app/ver_talleres.html', context)
+
+def taller_registrado(request):
+    """
+    Vista que redirecciona a la API de talleres
+    """
+    # Construir la URL completa de la API
+    api_url = request.build_absolute_uri('/api/talleres/')
+    
+    # Redireccionar a la API
+    return redirect(api_url)
