@@ -74,10 +74,8 @@ class Taller(models.Model):
     profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE, verbose_name="Profesor")
     lugar = models.ForeignKey(Lugar, on_delete=models.CASCADE, verbose_name="Lugar")
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name="Categoria")
-
     observacion = models.TextField(blank=True, null=True, verbose_name="Observaciones")
     
-    # Campos adicionales útiles
     fecha_creacion = models.DateTimeField(auto_now_add=True)
     fecha_modificacion = models.DateTimeField(auto_now=True)
     
