@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'talleresvecinosAPP',
+    'rest_framework', 
 ]
 
 CRISPY_ALLOWED_TEMPLATE_PACKS = 'bootstrap5'
