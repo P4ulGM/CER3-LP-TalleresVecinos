@@ -1,5 +1,5 @@
 from django.urls import path, include
-from .views import home, register
+from .views import home, register, ver_talleres
 
 from rest_framework import routers
 from .api import TallerViewSet, ProfesorViewSet, LugarViewSet, CategoriaViewSet
@@ -15,5 +15,6 @@ router.register('categorias', CategoriaViewSet, 'categorias')
 urlpatterns = [
     path('', home, name='home'),
     path('register/', register, name='register'),
+    path('ver_talleres/', ver_talleres, name='ver_talleres'),
     path('api/', include(router.urls)),
 ]

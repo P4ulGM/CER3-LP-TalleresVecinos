@@ -1,0 +1,40 @@
+{% extends 'app/base.html' %}
+
+{% block content %}
+<section class="seccion bg-gray min-vh-100">
+    <section class="py-5">
+        <div class="container">
+            <h2 class="mb-4">Lista de Talleres</h2>
+            
+            {% if talleres %}
+                <div class="row">
+                    {% for taller in talleres %}
+                        <div class="col-md-6 col-lg-4 mb-4">
+                            <div class="card h-100">
+                                <div class="card-header">
+                                    <h5 class="card-title mb-0">{{ taller.titulo }}</h5>
+                                    <span class="badge bg-primary">{{ taller.estado }}</span>
+                                </div>
+                                <div class="card-body">
+                                    <p class="card-text">
+                                        <strong>Fecha:</strong> {{ taller.fecha|date:"d/m/Y H:i" }}<br>
+                                        <strong>Duración:</strong> {{ taller.duracion_horas }} horas<br>
+                                        <strong>Profesor:</strong> {{ taller.profesor.nombre_completo }}<br>
+                                        <strong>Lugar:</strong> {{ taller.lugar.nombre }}<br>
+                                        <strong>Categoría:</strong> {{ taller.categoria.nombre }}
+                                    </p>
+                                    {% if taller.observacion %}
+                                        <p class="text-muted"><small>{{ taller.observacion }}</small></p>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <div class="alert alert-info">No hay talleres disponibles.</div>
+            {% endif %}
+        </div>
+    </section>
+</section>
+{% endblock %}
