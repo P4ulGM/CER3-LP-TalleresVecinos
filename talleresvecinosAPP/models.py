@@ -14,6 +14,18 @@ class Juntadevecino(models.Model):
         verbose_name_plural = "Juntas de Vecinos"
 
 
+class Profesor(models.Model):
+    nombre_completo = models.CharField(max_length=150, verbose_name="Nombre Completo")
+    
+    def __str__(self):
+        return self.nombre_completo
+    
+    class Meta:
+        verbose_name = "Profesor"
+        verbose_name_plural = "Profesores"
+        ordering = ['nombre_completo']
+
+
 class Taller(models.Model):
     ESTADO_CHOICES = [
         ('programado', 'Programado'),
@@ -37,7 +49,7 @@ class Taller(models.Model):
     fecha = models.DateTimeField(verbose_name="Fecha y Hora")
     duracion_horas = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Duración (horas)")
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='programado', verbose_name="Estado")
-    profesor = models.CharField(max_length=100, verbose_name="Profesor")
+    profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE, verbose_name="Profesor")
     lugar = models.CharField(max_length=200, verbose_name="Lugar")
     categoria = models.CharField(max_length=20, choices=CATEGORIA_CHOICES, verbose_name="Categoría")
     observacion = models.TextField(blank=True, null=True, verbose_name="Observaciones")
