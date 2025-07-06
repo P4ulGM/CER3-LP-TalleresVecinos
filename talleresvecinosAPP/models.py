@@ -57,7 +57,7 @@ class Taller(models.Model):
     
     
     titulo = models.CharField(max_length=200, verbose_name="Título")
-    fecha = models.DateTimeField(verbose_name="Fecha y Hora")
+    fecha = models.DateField(verbose_name="Fecha")
     duracion_horas = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Duración (horas)")
     estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='pendiente', verbose_name="Estado")
     profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE, verbose_name="Profesor")
@@ -69,7 +69,7 @@ class Taller(models.Model):
     fecha_modificacion = models.DateTimeField(auto_now=True)
     
     def __str__(self):
-        return f"{self.titulo} - {self.fecha.strftime('%d/%m/%Y')}"
+        return f"{self.titulo} - {self.fecha}"
     
     class Meta:
         verbose_name = "Taller"
