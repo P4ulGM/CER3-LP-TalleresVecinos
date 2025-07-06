@@ -6,6 +6,43 @@
         <div class="container">
             <h2 class="mb-4">Lista de Talleres</h2>
             
+            <!-- Filtro por categoría -->
+            <div class="row mb-4">
+                <div class="col-md-6">
+                    <form method="GET" class="d-flex">
+                        <select name="categoria" class="form-select me-2" onchange="this.form.submit()">
+                            <option value="">Todas las categorías</option>
+                            {% for categoria in categorias %}
+                                <option value="{{ categoria.id }}" 
+                                    {% if categoria.id|stringformat:"s" == categoria_seleccionada %}selected{% endif %}>
+                                    {{ categoria.nombre }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <button type="submit" class="btn btn-primary">Filtrar</button>
+                    </form>
+                </div>
+                <div class="col-md-6 text-end">
+                    {% if categoria_seleccionada %}
+                        <a href="{% url 'ver_talleres' %}" class="btn btn-secondary">Limpiar filtros</a>
+                    {% endif %}
+                </div>
+            </div>
+            
+            <!-- Mostrar categoría seleccionada -->
+            {% if categoria_seleccionada %}
+                <div class="alert alert-info">
+                    Mostrando talleres de la categoría: 
+                    <strong>
+                        {% for categoria in categorias %}
+                            {% if categoria.id|stringformat:"s" == categoria_seleccionada %}
+                                {{ categoria.nombre }}
+                            {% endif %}
+                        {% endfor %}
+                    </strong>
+                </div>
+            {% endif %}
+            
             {% if talleres %}
                 <div class="row">
                     {% for taller in talleres %}
@@ -13,15 +50,17 @@
                             <div class="card h-100">
                                 <div class="card-header">
                                     <h5 class="card-title mb-0">{{ taller.titulo }}</h5>
-                                    <span class="badge bg-primary">{{ taller.estado }}</span>
+                                    <div class="d-flex justify-content-between align-items-center">
+                                        <span class="badge bg-primary">{{ taller.estado }}</span>
+                                        <span class="badge bg-secondary">{{ taller.categoria.nombre }}</span>
+                                    </div>
                                 </div>
                                 <div class="card-body">
                                     <p class="card-text">
                                         <strong>Fecha:</strong> {{ taller.fecha|date:"d/m/Y H:i" }}<br>
                                         <strong>Duración:</strong> {{ taller.duracion_horas }} horas<br>
                                         <strong>Profesor:</strong> {{ taller.profesor.nombre_completo }}<br>
-                                        <strong>Lugar:</strong> {{ taller.lugar.nombre }}<br>
-                                        <strong>Categoría:</strong> {{ taller.categoria.nombre }}
+                                        <strong>Lugar:</strong> {{ taller.lugar.nombre }}
                                     </p>
                                     {% if taller.observacion %}
                                         <p class="text-muted"><small>{{ taller.observacion }}</small></p>
@@ -32,7 +71,13 @@
                     {% endfor %}
                 </div>
             {% else %}
-                <div class="alert alert-info">No hay talleres disponibles.</div>
+                <div class="alert alert-info">
+                    {% if categoria_seleccionada %}
+                        No hay talleres disponibles para la categoría seleccionada.
+                    {% else %}
+                        No hay talleres disponibles.
+                    {% endif %}
+                </div>
             {% endif %}
         </div>
     </section>

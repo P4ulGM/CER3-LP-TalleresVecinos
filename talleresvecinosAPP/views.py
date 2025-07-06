@@ -3,6 +3,7 @@ from .forms import CustomUserCreationForm
 from django.contrib.auth import authenticate, login
 import requests
 from django.conf import settings
+from .models import Taller, Categoria
 
 # Create your views here.
 
@@ -30,9 +31,17 @@ def register(request):
 
 def ver_talleres(request):
     try:
-        api_url = f"{request.build_absolute_uri('/api/talleres/')}"
+        # Obtener el filtro de categoría desde la URL
+        categoria_id = request.GET.get('categoria', '')
         
-        response = requests.get(api_url)
+        # Construir la URL de la API con filtros
+        api_url = f"{request.build_absolute_uri('/api/talleres/')}"
+        params = {}
+        
+        if categoria_id:
+            params['categoria'] = categoria_id
+        
+        response = requests.get(api_url, params=params)
         
         if response.status_code == 200:
             talleres_data = response.json()
@@ -46,7 +55,12 @@ def ver_talleres(request):
     except Exception as e:
         talleres = []
     
+    # Obtener todas las categorías para el filtro
+    categorias = Categoria.objects.all()
+    
     context = {
-        'talleres': talleres
+        'talleres': talleres,
+        'categorias': categorias,
+        'categoria_seleccionada': categoria_id
     }
     return render(request, 'app/ver_talleres.html', context)
