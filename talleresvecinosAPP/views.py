@@ -36,7 +36,9 @@ def ver_talleres(request):
         
         # Construir la URL de la API con filtros
         api_url = f"{request.build_absolute_uri('/api/talleres/')}"
-        params = {}
+        params = {
+            'estado': 'aceptado'  # Filtrar solo talleres aceptados
+        }
         
         if categoria_id:
             params['categoria'] = categoria_id

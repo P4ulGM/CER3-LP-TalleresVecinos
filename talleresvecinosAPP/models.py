@@ -50,27 +50,16 @@ class Categoria(models.Model):
 
 class Taller(models.Model):
     ESTADO_CHOICES = [
-        ('programado', 'Programado'),
-        ('en_curso', 'En Curso'),
-        ('finalizado', 'Finalizado'),
-        ('cancelado', 'Cancelado'),
+        ('pendiente', 'Pendiente'),
+        ('aceptado', 'Aceptado'),
+        ('rechazado', 'Rechazado'),
     ]
     
-    CATEGORIA_CHOICES = [
-        ('tecnologia', 'Tecnología'),
-        ('salud', 'Salud'),
-        ('educacion', 'Educación'),
-        ('arte', 'Arte y Cultura'),
-        ('deporte', 'Deporte'),
-        ('cocina', 'Cocina'),
-        ('manualidades', 'Manualidades'),
-        ('otros', 'Otros'),
-    ]
     
     titulo = models.CharField(max_length=200, verbose_name="Título")
     fecha = models.DateTimeField(verbose_name="Fecha y Hora")
     duracion_horas = models.DecimalField(max_digits=4, decimal_places=2, verbose_name="Duración (horas)")
-    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='programado', verbose_name="Estado")
+    estado = models.CharField(max_length=20, choices=ESTADO_CHOICES, default='pendiente', verbose_name="Estado")
     profesor = models.ForeignKey(Profesor, on_delete=models.CASCADE, verbose_name="Profesor")
     lugar = models.ForeignKey(Lugar, on_delete=models.CASCADE, verbose_name="Lugar")
     categoria = models.ForeignKey(Categoria, on_delete=models.CASCADE, verbose_name="Categoria")
