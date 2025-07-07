@@ -2,8 +2,8 @@ from django.shortcuts import render, redirect
 from .forms import CustomUserCreationForm
 from django.contrib.auth import authenticate, login
 import requests
-from django.conf import settings
-from .models import Taller, Categoria
+from django.utils import timezone
+from .models import Categoria
 
 # Create your views here.
 
@@ -37,7 +37,8 @@ def ver_talleres(request):
         # Construir la URL de la API con filtros
         api_url = f"{request.build_absolute_uri('/api/talleres/')}"
         params = {
-            'estado__in': 'aceptado,pendiente'  # Filtrar múltiples estados
+            'estado': 'aceptado',
+            'fecha__gte': timezone.now().date()
         }
         
         if categoria_id:
