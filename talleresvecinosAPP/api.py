@@ -3,6 +3,7 @@ from rest_framework import viewsets, permissions
 from .serializers import TallerSerializer, ProfesorSerializer, LugarSerializer, CategoriaSerializer
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter, OrderingFilter
+from django_filters import rest_framework as filters
 
 import requests
 from datetime import datetime
@@ -22,12 +23,20 @@ class CategoriaViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
     serializer_class = CategoriaSerializer
 
+class TallerFilter(filters.FilterSet):
+    fecha__gte = filters.DateFilter(field_name='fecha', lookup_expr='gte')
+
+    class Meta:
+        model = Taller
+        fields = ['categoria', 'estado', 'profesor', 'fecha__gte']
+
+
 class TallerViewSet(viewsets.ModelViewSet):
     queryset = Taller.objects.all()
     permission_classes = [permissions.AllowAny]
     serializer_class = TallerSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter, OrderingFilter]
-    filterset_fields = ['categoria', 'estado', 'profesor']
+    filterset_class = TallerFilter
     search_fields = ['titulo', 'observacion']
     ordering_fields = ['fecha', 'titulo']
     ordering = ['-fecha']
