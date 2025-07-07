@@ -13,8 +13,8 @@ class LugarSerializer(serializers.ModelSerializer):
 
 class LugarSimpleSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Categoria
-        fields = ('id', 'nombre')  
+        model = Lugar
+        fields = ('id', 'nombre')
 
 class CategoriaSerializer(serializers.ModelSerializer):
     class Meta:
