@@ -1,5 +1,3 @@
-# Talleres Vecinos
-
 Proyecto Django aplicación web y API REST.
 
 ## instalación
